@@ -54,7 +54,7 @@ export default function BlogCard({ blog }) {
               />
             ) : (
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-lg shadow-blue-950/20">
-                {(blog.author?.name || 'A').slice(0, 1).toUpperCase()}
+                {(blog.author?.name?.split(" ")[0] || 'A').slice(0, 1).toUpperCase()}
               </div>
             )}
 

@@ -206,7 +206,7 @@ export const searchBlogs = async (req, res) => {
           },
         },
       ],
-    }).populate("author", "name");
+    }).populate("author", "name profileImage");
 
     res.status(200).json({
       success: true,
@@ -230,7 +230,7 @@ export const getBlogsByCategory = async (req, res) => {
   try {
     const blogs = await Blog.find({
       category: req.params.category,
-    }).populate("author", "name");
+    }).populate("author", "name profileImage");
 
     res.status(200).json({
       success: true,

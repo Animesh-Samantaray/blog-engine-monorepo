@@ -85,7 +85,7 @@ export default function Home() {
           <div className="panel-soft p-6">
             <h2 className="text-lg font-semibold text-slate-50">Search and filter</h2>
             <p className="mt-2 text-sm leading-6 text-slate-400">
-              Search blogs by title or jump straight into a category.
+              Search blogs or  categories.
             </p>
 
             <div className="mt-5 space-y-5">
