@@ -62,10 +62,10 @@ export default function Register() {
 
   return (
     <section className="section-shell flex min-h-[calc(100vh-6rem)] items-center justify-center py-12">
-      <div className="card-panel w-full max-w-md p-6 sm:p-8">
+      <div className="panel-soft w-full max-w-md p-6 sm:p-8">
         <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Register</h1>
-          <p className="mt-2 text-sm text-slate-600">Create a new account to start posting.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-50">Register</h1>
+          <p className="mt-2 text-sm text-slate-400">Create a new account to start posting.</p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -153,7 +153,7 @@ export default function Register() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="mt-6 text-center text-sm text-slate-400">
           Already have an account?{' '}
           <Link to="/login" className="font-medium text-blue-600 hover:text-blue-700">
             Login here

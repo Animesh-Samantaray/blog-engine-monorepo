@@ -18,7 +18,7 @@ function App() {
   const hideShell = ['/login', '/register'].includes(location.pathname)
 
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-700">
+    <div className="min-h-screen bg-transparent text-slate-200">
       {!hideShell ? <Navbar /> : null}
 
       <main className="flex-1">

@@ -79,7 +79,7 @@ export default function EditBlog() {
           <p className="section-subtitle">Update the content and image of your blog post.</p>
         </div>
 
-        <form className="card-panel space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
+        <form className="panel-soft space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
           <div>
             <label className="label-field" htmlFor="edit-title">
               Title

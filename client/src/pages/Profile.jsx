@@ -79,16 +79,16 @@ export default function Profile() {
 
   return (
     <section className="section-shell space-y-8">
-      <div className="card-panel p-6 sm:p-8">
+      <div className="panel-soft p-6 sm:p-8">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
           {imageUrl ? (
             <img
               src={imageUrl}
               alt={user?.name || 'Profile'}
-              className="h-28 w-28 rounded-2xl object-cover ring-1 ring-slate-200"
+              className="h-28 w-28 rounded-2xl object-cover ring-1 ring-slate-700"
             />
           ) : (
-            <div className="flex h-28 w-28 items-center justify-center rounded-2xl bg-slate-200 text-2xl font-bold text-slate-600">
+            <div className="flex h-28 w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-2xl font-bold text-white shadow-lg shadow-blue-950/20">
               {(user?.name || 'U').slice(0, 1).toUpperCase()}
             </div>
           )}
@@ -97,8 +97,8 @@ export default function Profile() {
             {!editing ? (
               <>
                 <h1 className="section-title">{user?.name}</h1>
-                <p className="mt-2 text-sm text-slate-600">{user?.email}</p>
-                <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-600">{user?.bio || 'No bio added yet.'}</p>
+                <p className="mt-2 text-sm text-slate-400">{user?.email}</p>
+                <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-400">{user?.bio || 'No bio added yet.'}</p>
                 <button type="button" className="btn-secondary mt-5" onClick={() => setEditing(true)}>
                   Edit Profile
                 </button>
@@ -173,7 +173,7 @@ export default function Profile() {
             ))}
           </div>
         ) : (
-          <div className="card-panel p-8 text-center text-slate-600">
+          <div className="card-panel p-8 text-center text-slate-400">
             You have not created any blogs yet.
           </div>
         )}

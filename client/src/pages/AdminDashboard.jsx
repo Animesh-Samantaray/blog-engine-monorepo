@@ -111,22 +111,22 @@ export default function AdminDashboard() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-500">Total Users</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{stats?.totalUsers || 0}</p>
+          <p className="text-sm text-slate-400">Total Users</p>
+          <p className="mt-2 text-3xl font-bold text-slate-50">{stats?.totalUsers || 0}</p>
         </div>
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-500">Total Blogs</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{stats?.totalBlogs || 0}</p>
+          <p className="text-sm text-slate-400">Total Blogs</p>
+          <p className="mt-2 text-3xl font-bold text-slate-50">{stats?.totalBlogs || 0}</p>
         </div>
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-500">Total Comments</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{stats?.totalComments || 0}</p>
+          <p className="text-sm text-slate-400">Total Comments</p>
+          <p className="mt-2 text-3xl font-bold text-slate-50">{stats?.totalComments || 0}</p>
         </div>
       </div>
 
       <div className="grid gap-8 xl:grid-cols-2">
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-slate-900">Users Table</h2>
+          <h2 className="text-2xl font-semibold text-slate-50">Users Table</h2>
           <div className="table-wrap">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="table-head">
@@ -160,7 +160,7 @@ export default function AdminDashboard() {
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-2xl font-semibold text-slate-900">Blogs Table</h2>
+          <h2 className="text-2xl font-semibold text-slate-50">Blogs Table</h2>
           <div className="table-wrap">
             <table className="min-w-full divide-y divide-slate-200">
               <thead className="table-head">

@@ -33,6 +33,7 @@ export default function BlogDetails() {
   const [editingCommentText, setEditingCommentText] = useState('')
 
   const imageUrl = useMemo(() => getImageUrl(blog?.image), [blog?.image])
+  const authorImage = useMemo(() => getImageUrl(blog?.author?.profileImage), [blog?.author?.profileImage])
 
   useEffect(() => {
     let isActive = true
@@ -163,30 +164,45 @@ export default function BlogDetails() {
         {imageUrl ? (
           <img src={imageUrl} alt={blog.title} className="h-64 w-full object-cover sm:h-80" />
         ) : (
-          <div className="flex h-64 items-center justify-center bg-gradient-to-br from-slate-200 to-slate-100 text-slate-500 sm:h-80">
+          <div className="flex h-64 items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 text-slate-400 sm:h-80">
             No image available
           </div>
         )}
 
         <div className="p-6 sm:p-8">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
             <span className="badge">{blog.category}</span>
             <span>{formatDate(blog.createdAt)}</span>
           </div>
 
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">
             {blog.title}
           </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-slate-600">
-            <div>
-              <p className="font-medium text-slate-900">{blog.author?.name || 'Unknown author'}</p>
-              <p>Author</p>
+          <div className="mt-5 flex flex-wrap items-center gap-4 rounded-2xl border border-slate-700 bg-slate-950/40 p-4 text-sm text-slate-400">
+            <div className="flex items-center gap-3">
+              {authorImage ? (
+                <img
+                  src={authorImage}
+                  alt={blog.author?.name || 'Author'}
+                  className="h-12 w-12 rounded-full object-cover ring-2 ring-blue-500/20"
+                />
+              ) : (
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-lg shadow-blue-950/20">
+                  {(blog.author?.name || 'A').slice(0, 1).toUpperCase()}
+                </div>
+              )}
+
+              <div>
+                <p className="font-medium text-slate-100">{blog.author?.name || 'Unknown author'}</p>
+                <p className="text-xs text-slate-400">Author</p>
+              </div>
             </div>
+
             {blog.author?.bio ? <p className="max-w-2xl">{blog.author.bio}</p> : null}
           </div>
 
-          <div className="mt-6 whitespace-pre-line text-base leading-8 text-slate-700">
+          <div className="mt-6 whitespace-pre-line text-base leading-8 text-slate-300">
             {blog.content}
           </div>
 
@@ -205,7 +221,7 @@ export default function BlogDetails() {
 
       <section className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.9fr]">
         <div className="card-panel p-6 sm:p-8">
-          <h2 className="text-2xl font-semibold text-slate-900">Comments</h2>
+          <h2 className="text-2xl font-semibold text-slate-50">Comments</h2>
 
           {user ? (
             <form className="mt-6 space-y-4" onSubmit={handleAddComment}>
@@ -227,7 +243,7 @@ export default function BlogDetails() {
               </button>
             </form>
           ) : (
-            <div className="mt-6 rounded-2xl bg-slate-50 p-4 text-sm text-slate-600">
+            <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950/40 p-4 text-sm text-slate-400">
               <Link to="/login" className="font-medium text-blue-600 hover:text-blue-700">
                 Login
               </Link>{' '}
@@ -300,7 +316,7 @@ export default function BlogDetails() {
                 </div>
               ))
             ) : (
-              <div className="rounded-2xl bg-slate-50 p-5 text-sm text-slate-600">
+              <div className="rounded-2xl border border-slate-700 bg-slate-950/40 p-5 text-sm text-slate-400">
                 No comments yet.
               </div>
             )}
@@ -308,22 +324,22 @@ export default function BlogDetails() {
         </div>
 
         <aside className="card-panel p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-slate-900">Blog Summary</h2>
-          <dl className="mt-5 space-y-4 text-sm text-slate-600">
+          <h2 className="text-xl font-semibold text-slate-50">Blog Summary</h2>
+          <dl className="mt-5 space-y-4 text-sm text-slate-400">
             <div>
-              <dt className="font-medium text-slate-900">Author</dt>
+              <dt className="font-medium text-slate-100">Author</dt>
               <dd>{blog.author?.name || 'Unknown'}</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-900">Published</dt>
+              <dt className="font-medium text-slate-100">Published</dt>
               <dd>{formatDate(blog.createdAt)}</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-900">Category</dt>
+              <dt className="font-medium text-slate-100">Category</dt>
               <dd>{blog.category}</dd>
             </div>
             <div>
-              <dt className="font-medium text-slate-900">Status</dt>
+              <dt className="font-medium text-slate-100">Status</dt>
               <dd>{blog.isPublished ? 'Published' : 'Draft'}</dd>
             </div>
           </dl>

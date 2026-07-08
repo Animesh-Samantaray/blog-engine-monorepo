@@ -51,7 +51,7 @@ export default function CreateBlog() {
           <p className="section-subtitle">Write a new blog post and share it with others.</p>
         </div>
 
-        <form className="card-panel space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
+        <form className="panel-soft space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
           <div>
             <label className="label-field" htmlFor="title">
               Title

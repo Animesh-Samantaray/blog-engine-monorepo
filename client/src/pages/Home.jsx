@@ -54,16 +54,16 @@ export default function Home() {
 
   return (
     <div>
-      <section className="border-b border-slate-200 bg-white">
+      <section className="page-hero">
         <div className="section-shell grid gap-10 py-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:py-16">
           <div>
-            <span className="badge"> MERN Blog Platform</span>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-              Manage blogs with a simple, clean, and professional dashboard.
+            <span className="badge">Blog Platform</span>
+            <h1 className="mt-5 max-w-2xl text-4xl font-bold tracking-tight text-slate-50 sm:text-5xl">
+              A blogging workspace for writing, reading, and managing content.
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg">
+            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
               Browse articles, search by title, filter by category, write posts, and manage your
-              profile from one organized interface.
+              account from one polished dashboard.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -82,9 +82,9 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="card-panel p-6">
-            <h2 className="text-lg font-semibold text-slate-900">Find what you need</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-600">
+          <div className="panel-soft p-6">
+            <h2 className="text-lg font-semibold text-slate-50">Search and filter</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-400">
               Search blogs by title or jump straight into a category.
             </p>
 
@@ -109,7 +109,7 @@ export default function Home() {
               Browse the newest posts from the blogging community.
             </p>
           </div>
-          <p className="text-sm text-slate-500">{blogs.length} posts found</p>
+          <p className="text-sm text-slate-400">{blogs.length} posts found</p>
         </div>
 
         {loading ? (
@@ -121,7 +121,7 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="card-panel p-8 text-center text-slate-600">
+          <div className="card-panel p-8 text-center text-slate-400">
             No blogs found for the current filters.
           </div>
         )}

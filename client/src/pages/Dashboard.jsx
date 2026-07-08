@@ -11,7 +11,8 @@ export default function Dashboard() {
   useEffect(() => {
     const loadDashboard = async () => {
       try {
-        const { data: response } = await api.get('/profile/dashboard')
+        const temp = await api.get('/profile/dashboard');
+        const response = temp.data;
         setData(response)
       } catch (error) {
         toast.error(error.response?.data?.message || 'Failed to load dashboard.')
@@ -34,20 +35,25 @@ export default function Dashboard() {
         <p className="section-subtitle">A quick look at your account activity.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-500">Total Blogs</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{data?.totalBlogs || 0}</p>
+          <p className="text-sm text-slate-400">Total Blogs</p>
+          <p className="mt-2 text-3xl font-bold text-slate-50">{data?.totalBlogs || 0}</p>
         </div>
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-500">Total Comments</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900">{data?.totalComments || 0}</p>
+          <p className="text-sm text-slate-400">Total Comments</p>
+          <p className="mt-2 text-3xl font-bold text-slate-50">{data?.totalComments || 0}</p>
+        </div>
+        <div className="card-panel p-6">
+          <p className="text-sm text-slate-400">Profile Info</p>
+          <p className="mt-2 text-lg font-semibold text-slate-50">{data?.user?.name || 'Account'}</p>
+          <p className="mt-1 text-sm text-slate-400">{data?.user?.email || 'No email available'}</p>
         </div>
       </div>
 
       <div className="card-panel p-6 sm:p-8">
-        <h2 className="text-2xl font-semibold text-slate-900">Recent Blogs</h2>
-        <p className="mt-2 text-sm text-slate-600">Your latest posts are shown below.</p>
+        <h2 className="text-2xl font-semibold text-slate-50">Recent Blogs</h2>
+        <p className="mt-2 text-sm text-slate-400">Your latest posts are shown below.</p>
 
         {data?.blogs?.length ? (
           <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -56,7 +62,7 @@ export default function Dashboard() {
             ))}
           </div>
         ) : (
-          <div className="mt-6 rounded-2xl bg-slate-50 p-5 text-sm text-slate-600">
+          <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950/40 p-5 text-sm text-slate-400">
             You have not created any blogs yet.
           </div>
         )}

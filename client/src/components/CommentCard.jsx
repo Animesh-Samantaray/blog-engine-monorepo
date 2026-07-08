@@ -19,7 +19,7 @@ export default function CommentCard({ comment, actions }) {
   const imageUrl = getImageUrl(comment.user?.profileImage)
 
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+    <article className="rounded-2xl border border-slate-700 bg-slate-900/80 p-4 shadow-lg shadow-slate-950/20 transition duration-200 hover:border-slate-600">
       <div className="flex items-start gap-3">
         {imageUrl ? (
           <img
@@ -28,18 +28,18 @@ export default function CommentCard({ comment, actions }) {
             className="h-10 w-10 rounded-full object-cover"
           />
         ) : (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200 text-sm font-semibold text-slate-600">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-800 text-sm font-semibold text-slate-200">
             {(comment.user?.name || 'U').slice(0, 1).toUpperCase()}
           </div>
         )}
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <h4 className="font-semibold text-slate-900">{comment.user?.name || 'Unknown'}</h4>
-            <span className="text-xs text-slate-500">{formatDate(comment.createdAt)}</span>
+            <h4 className="font-semibold text-slate-100">{comment.user?.name || 'Unknown'}</h4>
+            <span className="text-xs text-slate-400">{formatDate(comment.createdAt)}</span>
           </div>
 
-          <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-600">
+          <p className="mt-2 whitespace-pre-line text-sm leading-6 text-slate-400">
             {comment.comment}
           </p>
 

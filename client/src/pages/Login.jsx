@@ -33,10 +33,10 @@ export default function Login() {
 
   return (
     <section className="section-shell flex min-h-[calc(100vh-6rem)] items-center justify-center py-12">
-      <div className="card-panel w-full max-w-md p-6 sm:p-8">
+      <div className="panel-soft w-full max-w-md p-6 sm:p-8">
         <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-slate-900">Login</h1>
-          <p className="mt-2 text-sm text-slate-600">Access your account to manage blogs.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-50">Login</h1>
+          <p className="mt-2 text-sm text-slate-400">Access your account to manage blogs.</p>
         </div>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -73,7 +73,7 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className="mt-6 text-center text-sm text-slate-400">
           New here?{' '}
           <Link to="/register" className="font-medium text-blue-600 hover:text-blue-700">
             Create an account

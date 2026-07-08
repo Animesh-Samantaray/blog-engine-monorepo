@@ -191,12 +191,21 @@ export const deleteBlog = async (req, res) => {
 export const searchBlogs = async (req, res) => {
   try {
     const { search } = req.query;
-
     const blogs = await Blog.find({
-      title: {
-        $regex: search,
-        $options: "i",
-      },
+      $or: [
+        {
+          title: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+        {
+          content: {
+            $regex: search,
+            $options: "i",
+          },
+        },
+      ],
     }).populate("author", "name");
 
     res.status(200).json({
