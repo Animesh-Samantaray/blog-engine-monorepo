@@ -157,194 +157,231 @@ export default function BlogDetails() {
   const canManageBlog = user && (user.role === 'admin' || user._id === blog.author?._id)
   const canManageComment = (comment) =>
     user && (user.role === 'admin' || user._id === comment.user?._id)
-
   return (
-    <section className="section-shell">
-      <article className="card-panel overflow-hidden">
-        {imageUrl ? (
-          <img src={imageUrl} alt={blog.title} className="h-64 w-full object-cover sm:h-80" />
-        ) : (
-          <div className="flex h-64 items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 text-slate-400 sm:h-80">
-            No image available
-          </div>
-        )}
+    <section className="mx-auto max-w-7xl p-4 sm:p-6 lg:p-8">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+        
+        {/* ========================================= */}
+        {/* LEFT COLUMN: Main Article & Comments      */}
+        {/* ========================================= */}
+        <div className="space-y-10 lg:col-span-8">
+          
+          {/* Main Article Card */}
+          <article className="overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/50 shadow-2xl backdrop-blur-sm">
+            {imageUrl ? (
+              <img src={imageUrl} alt={blog.title} className="h-72 w-full object-cover sm:h-96" />
+            ) : (
+              <div className="flex h-72 items-center justify-center bg-gradient-to-br from-slate-800 to-slate-950 text-slate-500 sm:h-96">
+                No image available
+              </div>
+            )}
 
-        <div className="p-6 sm:p-8">
-          <div className="flex flex-wrap items-center gap-3 text-sm text-slate-400">
-            <span className="badge">{blog.category}</span>
-            <span>{formatDate(blog.createdAt)}</span>
-          </div>
+            <div className="p-6 sm:p-10">
+              <div className="flex flex-wrap items-center gap-3 text-sm font-medium">
+                {/* Multicolor Badge */}
+                <span className="rounded-full bg-gradient-to-r from-pink-500/20 to-purple-500/20 px-3 py-1 text-purple-300 border border-purple-500/30">
+                  {blog.category}
+                </span>
+                <span className="text-slate-400">{formatDate(blog.createdAt)}</span>
+              </div>
 
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl">
-            {blog.title}
-          </h1>
+              {/* Multicolor Title */}
+              <h1 className="mt-6 text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-cyan-300 sm:text-5xl leading-tight">
+                {blog.title}
+              </h1>
 
-          <div className="mt-5 flex flex-wrap items-center gap-4 rounded-2xl border border-slate-700 bg-slate-950/40 p-4 text-sm text-slate-400">
-            <div className="flex items-center gap-3">
-              {authorImage ? (
-                <img
-                  src={authorImage}
-                  alt={blog.author?.name || 'Author'}
-                  className="h-12 w-12 rounded-full object-cover ring-2 ring-blue-500/20"
-                />
-              ) : (
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-lg shadow-blue-950/20">
-                  {(blog.author?.name || 'A').slice(0, 1).toUpperCase()}
-                </div>
-              )}
-
-              <div>
-                <p className="font-medium text-slate-100">{blog.author?.name || 'Unknown author'}</p>
-                <p className="text-xs text-slate-400">Author</p>
+              {/* Content */}
+              <div className="mt-8 whitespace-pre-line text-lg leading-relaxed text-slate-300">
+                {blog.content}
               </div>
             </div>
+          </article>
 
-            {blog.author?.bio ? <p className="max-w-2xl">{blog.author.bio}</p> : null}
-          </div>
+          {/* Comments Section */}
+          <section className="rounded-3xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-sm sm:p-10">
+            <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+              Discussion
+            </h2>
 
-          <div className="mt-6 whitespace-pre-line text-base leading-8 text-slate-300">
-            {blog.content}
-          </div>
-
-          {canManageBlog ? (
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to={`/edit-blog/${blog._id}`} className="btn-secondary">
-                Edit
-              </Link>
-              <button type="button" onClick={handleDeleteBlog} className="btn-danger">
-                Delete
-              </button>
-            </div>
-          ) : null}
-        </div>
-      </article>
-
-      <section className="mt-8 grid gap-8 lg:grid-cols-[1fr_0.9fr]">
-        <div className="card-panel p-6 sm:p-8">
-          <h2 className="text-2xl font-semibold text-slate-50">Comments</h2>
-
-          {user ? (
-            <form className="mt-6 space-y-4" onSubmit={handleAddComment}>
-              <div>
-                <label className="label-field" htmlFor="comment">
-                  Add Comment
-                </label>
+            {user ? (
+              <form className="mt-6 space-y-4" onSubmit={handleAddComment}>
                 <textarea
                   id="comment"
-                  rows="4"
-                  className="input-field resize-none"
+                  rows="3"
+                  className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 p-4 text-slate-200 placeholder-slate-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition-all"
+                  placeholder="Share your thoughts..."
                   value={commentText}
                   onChange={(event) => setCommentText(event.target.value)}
                   required
                 />
-              </div>
-              <button type="submit" className="btn-primary">
-                Comment
-              </button>
-            </form>
-          ) : (
-            <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950/40 p-4 text-sm text-slate-400">
-              <Link to="/login" className="font-medium text-blue-600 hover:text-blue-700">
-                Login
-              </Link>{' '}
-              to add a comment.
-            </div>
-          )}
-
-          <div className="mt-6 space-y-4">
-            {comments.length ? (
-              comments.map((comment) => (
-                <div key={comment._id} className="space-y-3">
-                  {editingCommentId === comment._id ? (
-                    <div className="card-panel p-4">
-                      <textarea
-                        rows="4"
-                        className="input-field resize-none"
-                        value={editingCommentText}
-                        onChange={(event) => setEditingCommentText(event.target.value)}
-                      />
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          className="btn-primary px-4 py-2"
-                          onClick={() => handleUpdateComment(comment._id)}
-                        >
-                          Save
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-secondary px-4 py-2"
-                          onClick={() => {
-                            setEditingCommentId(null)
-                            setEditingCommentText('')
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <CommentCard
-                      comment={comment}
-                      actions={
-                        canManageComment(comment)
-                          ? [
-                              <button
-                                key="edit"
-                                type="button"
-                                className="btn-secondary px-4 py-2"
-                                onClick={() => {
-                                  setEditingCommentId(comment._id)
-                                  setEditingCommentText(comment.comment)
-                                }}
-                              >
-                                Edit
-                              </button>,
-                              <button
-                                key="delete"
-                                type="button"
-                                className="btn-danger px-4 py-2"
-                                onClick={() => handleDeleteComment(comment._id)}
-                              >
-                                Delete
-                              </button>,
-                            ]
-                          : null
-                      }
-                    />
-                  )}
-                </div>
-              ))
+                <button type="submit" className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 px-6 py-2.5 font-semibold text-white shadow-lg shadow-blue-900/50 hover:from-blue-500 hover:to-cyan-500 transition-all">
+                  Post Comment
+                </button>
+              </form>
             ) : (
-              <div className="rounded-2xl border border-slate-700 bg-slate-950/40 p-5 text-sm text-slate-400">
-                No comments yet.
+              <div className="mt-6 rounded-xl border border-slate-800 bg-slate-950 p-5 text-sm text-slate-400">
+                <Link to="/login" className="font-semibold text-cyan-400 hover:text-cyan-300 underline underline-offset-2">
+                  Login
+                </Link>{' '}
+                to join the conversation.
               </div>
             )}
-          </div>
+
+            {/* Render Comments Array Here */}
+            <div className="mt-8 space-y-6">
+              {comments.length ? (
+                comments.map((comment) => (
+                  <div key={comment._id} className="space-y-4">
+                    {editingCommentId === comment._id ? (
+                      <div className="rounded-2xl border border-slate-700 bg-slate-900/50 p-5 backdrop-blur-sm shadow-lg">
+                        <textarea
+                          rows="3"
+                          className="w-full resize-none rounded-xl border border-slate-700 bg-slate-950 p-4 text-slate-200 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all"
+                          value={editingCommentText}
+                          onChange={(event) => setEditingCommentText(event.target.value)}
+                        />
+                        <div className="mt-4 flex flex-wrap gap-3">
+                          <button
+                            type="button"
+                            className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-600 px-5 py-2 font-semibold text-white shadow-lg shadow-blue-900/50 hover:from-blue-500 hover:to-cyan-500 transition-all"
+                            onClick={() => handleUpdateComment(comment._id)}
+                          >
+                            Save
+                          </button>
+                          <button
+                            type="button"
+                            className="rounded-xl border border-slate-700 bg-slate-800 px-5 py-2 font-semibold text-white shadow-sm hover:bg-slate-700 transition-all"
+                            onClick={() => {
+                              setEditingCommentId(null)
+                              setEditingCommentText('')
+                            }}
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <CommentCard
+                        comment={comment}
+                        actions={
+                          canManageComment(comment)
+                            ? [
+                                <button
+                                  key="edit"
+                                  type="button"
+                                  className="rounded-lg border border-slate-700 bg-slate-800 px-4 py-1.5 text-sm font-semibold text-slate-200 shadow-sm hover:bg-slate-700 hover:text-white transition-all"
+                                  onClick={() => {
+                                    setEditingCommentId(comment._id)
+                                    setEditingCommentText(comment.comment)
+                                  }}
+                                >
+                                  Edit
+                                </button>,
+                                <button
+                                  key="delete"
+                                  type="button"
+                                  className="rounded-lg bg-gradient-to-r from-red-600 to-rose-600 px-4 py-1.5 text-sm font-semibold text-white shadow-md shadow-red-900/40 hover:from-red-500 hover:to-rose-500 transition-all"
+                                  onClick={() => handleDeleteComment(comment._id)}
+                                >
+                                  Delete
+                                </button>,
+                              ]
+                            : null
+                        }
+                      />
+                    )}
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-10 text-slate-500 italic">
+                  Be the first to share your thoughts!
+                </div>
+              )}
+            </div>
+          </section>
         </div>
 
-        <aside className="card-panel p-6 sm:p-8">
-          <h2 className="text-xl font-semibold text-slate-50">Blog Summary</h2>
-          <dl className="mt-5 space-y-4 text-sm text-slate-400">
-            <div>
-              <dt className="font-medium text-slate-100">Author</dt>
-              <dd>{blog.author?.name || 'Unknown'}</dd>
+        {/* ========================================= */}
+        {/* RIGHT COLUMN: Sidebar (Author & Summary)  */}
+        {/* ========================================= */}
+        <aside className="space-y-8 lg:col-span-4">
+          
+          {/* Author Card */}
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-sm sm:p-8">
+            <h3 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-500">Written By</h3>
+            <div className="flex flex-col items-center text-center">
+              {authorImage ? (
+                <img
+                  src={authorImage}
+                  alt={blog.author?.name || 'Author'}
+                  className="h-24 w-24 rounded-full object-cover ring-4 ring-purple-500/30 shadow-2xl shadow-purple-900/50"
+                />
+              ) : (
+                <div className="flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-violet-600 to-fuchsia-600 text-3xl font-bold text-white shadow-xl shadow-purple-900/50">
+                  {(blog.author?.name || 'A').slice(0, 1).toUpperCase()}
+                </div>
+              )}
+
+              {/* Multicolor Author Name */}
+              <p className="mt-4 text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
+                {blog.author?.name || 'Unknown author'}
+              </p>
+              
+              {blog.author?.bio ? (
+                <p className="mt-3 text-sm leading-relaxed text-slate-400">{blog.author.bio}</p>
+              ) : null}
             </div>
-            <div>
-              <dt className="font-medium text-slate-100">Published</dt>
-              <dd>{formatDate(blog.createdAt)}</dd>
+          </div>
+
+          {/* Blog Summary Card */}
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur-sm sm:p-8">
+            <h3 className="mb-5 text-sm font-bold uppercase tracking-widest text-slate-500">Article Details</h3>
+            <dl className="space-y-4 text-sm">
+              <div className="flex justify-between border-b border-slate-800 pb-3">
+                <dt className="text-slate-400">Published</dt>
+                <dd className="font-medium text-slate-200">{formatDate(blog.createdAt)}</dd>
+              </div>
+              <div className="flex justify-between border-b border-slate-800 pb-3">
+                <dt className="text-slate-400">Category</dt>
+                <dd className="font-medium text-slate-200">{blog.category}</dd>
+              </div>
+              <div className="flex justify-between">
+                <dt className="text-slate-400">Status</dt>
+                <dd className="font-medium">
+                  {blog.isPublished ? (
+                    <span className="text-emerald-400">Live</span>
+                  ) : (
+                    <span className="text-amber-400">Draft</span>
+                  )}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* Management Actions */}
+          {canManageBlog ? (
+            <div className="rounded-3xl border border-amber-900/30 bg-amber-950/10 p-6 backdrop-blur-sm sm:p-8">
+               <h3 className="mb-4 text-sm font-bold uppercase tracking-widest text-slate-500">Admin Actions</h3>
+              <div className="flex flex-col gap-3">
+                <Link 
+                  to={`/edit-blog/${blog._id}`} 
+                  className="flex justify-center rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 px-4 py-3 font-semibold text-white shadow-lg shadow-orange-900/40 hover:from-amber-400 hover:to-orange-400 transition-all"
+                >
+                  Edit Article
+                </Link>
+                <button 
+                  type="button" 
+                  onClick={handleDeleteBlog} 
+                  className="rounded-xl bg-gradient-to-r from-red-600 to-rose-600 px-4 py-3 font-semibold text-white shadow-lg shadow-red-900/40 hover:from-red-500 hover:to-rose-500 transition-all"
+                >
+                  Delete Article
+                </button>
+              </div>
             </div>
-            <div>
-              <dt className="font-medium text-slate-100">Category</dt>
-              <dd>{blog.category}</dd>
-            </div>
-            <div>
-              <dt className="font-medium text-slate-100">Status</dt>
-              <dd>{blog.isPublished ? 'Published' : 'Draft'}</dd>
-            </div>
-          </dl>
+          ) : null}
+          
         </aside>
-      </section>
+      </div>
     </section>
   )
 }
