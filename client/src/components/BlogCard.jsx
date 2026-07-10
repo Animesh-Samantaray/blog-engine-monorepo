@@ -18,22 +18,33 @@ const getImageUrl = (image) => {
 
 export default function BlogCard({ blog }) {
   const imageUrl = getImageUrl(blog.image)
+  const videoUrl=getImageUrl(blog.video)
   const summary = blog.content?.slice(0, 150) || 'No description available.'
   const authorImage = getImageUrl(blog.author?.profileImage)
 
   return (
     <article className="card-panel flex h-full flex-col overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
-      {imageUrl ? (
-        <img
-          src={imageUrl}
-          alt={blog.title}
-          className="h-48 w-full object-cover"
-        />
-      ) : (
-        <div className="flex h-48 items-center justify-center text-sm font-medium text-secondary" style={{ background: 'var(--color-bg-secondary)' }}>
-          No image available
-        </div>
-      )}
+      {videoUrl ? (
+    <video
+        src={videoUrl}
+        controls
+        className="h-48 w-full object-cover"
+        preload="metadata"
+    />
+) : imageUrl ? (
+    <img
+        src={imageUrl}
+        alt={blog.title}
+        className="h-48 w-full object-cover"
+    />
+) : (
+    <div
+        className="flex h-48 items-center justify-center"
+        style={{background:'var(--color-bg-secondary)'}}
+    >
+        No media available
+    </div>
+)}
 
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-3 flex items-center justify-between gap-3 text-xs text-secondary">

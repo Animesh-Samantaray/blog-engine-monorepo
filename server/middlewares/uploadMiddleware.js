@@ -11,27 +11,49 @@ const storage = multer.diskStorage({
     const uniqueName =
       Date.now() + "-" + Math.round(Math.random() * 1e9);
 
-    cb(
-      null,
-      uniqueName + path.extname(file.originalname)
-    );
+    cb(null, uniqueName + path.extname(file.originalname));
   },
 });
 
 // File Filter
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpg|jpeg|png|webp/;
+  const allowedExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".webp",
+    ".mp4",
+    ".mov",
+    ".avi",
+    ".mkv",
+    ".webm",
+  ];
 
-  const isValidExt = allowedTypes.test(
-    path.extname(file.originalname).toLowerCase()
-  );
+  const allowedMimeTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
 
-  const isValidMime = allowedTypes.test(file.mimetype);
+    "video/mp4",
+    "video/quicktime", // .mov
+    "video/x-msvideo", // .avi
+    "video/x-matroska", // .mkv
+    "video/webm",
+  ];
 
-  if (isValidExt && isValidMime) {
+  const extension = path.extname(file.originalname).toLowerCase();
+
+  if (
+    allowedExtensions.includes(extension) &&
+    allowedMimeTypes.includes(file.mimetype)
+  ) {
     cb(null, true);
   } else {
-    cb(new Error("Only JPG, JPEG, PNG and WEBP images are allowed."));
+    cb(
+      new Error(
+        "Only JPG, JPEG, PNG, WEBP, MP4, MOV, AVI, MKV and WEBM files are allowed."
+      )
+    );
   }
 };
 
@@ -40,7 +62,7 @@ const uploadMiddleware = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 20 * 1024 * 1024, 
+    fileSize: 100 * 1024 * 1024, // 100 MB
   },
 });
 

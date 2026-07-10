@@ -4,7 +4,7 @@ import Loading from '../components/Loading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import loginGif from './Login.gif'
 import { serverUrl } from '../services/axios.js'
-
+import loginVDO from './login.mp4'
 const readFileAsDataUrl = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -24,9 +24,13 @@ export default function Register() {
   })
   const [submitting, setSubmitting] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
-
+ const [gifKey, setGifKey] = useState(0);
   const { register, user, loading } = useAuth()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    setGifKey(Date.now()); // New key every mount
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -84,11 +88,18 @@ export default function Register() {
       
       {/* Desktop Left Side - FULL COVERAGE GIF */}
       <section className="hidden lg:block relative z-10 w-1/2 bg-[#2bc98a] border-r border-slate-800/50 overflow-hidden">
-        <img 
-          src={loginGif} 
-          alt="Register Animation" 
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-        />
+         <video
+          key={location.key}      // Restart when the Login page is mounted
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out ${
+            isLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <source src={loginVDO} type="video/mp4" />
+        </video>
       </section>
 
       {/* Mobile Center / Desktop Right Side (Register Form - Dark Theme, Wide Layout) */}

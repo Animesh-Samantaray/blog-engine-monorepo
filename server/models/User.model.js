@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
 
     password: {
       type: String,
-      required: function() {
+      required: function () {
         // Password is required only if user is not from Google OAuth
         return !this.googleId;
       },
@@ -45,8 +45,21 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    resetOTP: {
+      type: String,
+      default: "",
+    },
+
+    resetOTPExpire: {
+      type: Date,
+    },
+
+    isOTPVerified: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
-const User =mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
 export default User;

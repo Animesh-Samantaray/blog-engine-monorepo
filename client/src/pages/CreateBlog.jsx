@@ -6,11 +6,11 @@ import api from '../services/axios.js'
 export default function CreateBlog() {
   const navigate = useNavigate()
   const [form, setForm] = useState({
-    title: '',
-    category: 'Technology',
-    content: '',
-    image: null,
-  })
+  title: '',
+  category: 'Technology',
+  content: '',
+  media: null,
+})
   const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (event) => {
@@ -29,9 +29,9 @@ export default function CreateBlog() {
       data.append('category', form.category)
       data.append('content', form.content.trim())
 
-      if (form.image) {
-        data.append('image', form.image)
-      }
+      if (form.media) {
+    data.append("media", form.media)
+}
 
       await api.post('/blog', data)
       toast.success('Blog created successfully.')
@@ -88,14 +88,16 @@ export default function CreateBlog() {
 
           <div>
             <label className="label-field" htmlFor="image">
-              Cover image <span className="text-xs font-normal text-secondary">(optional)</span>
+              Upload Image or Video <span className="text-xs font-normal text-secondary">(optional)</span>
             </label>
             <input
               id="image"
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               className="input-field pt-2"
-              onChange={(event) => setForm({ ...form, image: event.target.files?.[0] || null })}
+              onChange={(e)=>
+setForm({...form,media:e.target.files[0]})
+}
             />
           </div>
 

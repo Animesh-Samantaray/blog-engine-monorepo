@@ -2,7 +2,7 @@ import User from "../models/User.model.js";
 import Blog from "../models/Blog.model.js";
 import Comment from "../models/Comment.model.js";
 import AdminEmail from "../models/AdminEmail.model.js";
-import deleteImage from "../utils/deleteImage.js";
+import deleteMedia from "../utils/deleteMedia.js";
 
 // ======================================
 // Dashboard Statistics
@@ -88,7 +88,10 @@ export const deleteUser = async (req, res) => {
     const userBlogs = await Blog.find({ author: id });
     for (const blog of userBlogs) {
       if (blog.image) {
-        deleteImage(blog.image);
+        deleteMedia(blog.image);
+      }
+      if (blog.video) {
+        deleteMedia(blog.video);
       }
     }
 
@@ -104,7 +107,7 @@ export const deleteUser = async (req, res) => {
 
     // Delete user's profile image if local
     if (user.profileImage && user.profileImage.startsWith("/uploads/")) {
-      deleteImage(user.profileImage);
+      deleteMedia(user.profileImage);
     }
 
     // Delete user
@@ -169,9 +172,12 @@ export const deleteBlog = async (req, res) => {
     // Delete comments related to this blog
     await Comment.deleteMany({ blog: id });
 
-    // Delete blog cover image
+    // Delete blog cover image,vdo
     if (blog.image) {
-      deleteImage(blog.image);
+      deleteMedia(blog.image);
+    }
+    if (blog.video) {
+      deleteMedia(blog.video);
     }
 
     // Delete blog

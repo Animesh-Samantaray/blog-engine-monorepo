@@ -25,9 +25,9 @@ router.get("/category/:category", getBlogsByCategory);
 router.get("/:id", getBlogById);
 
 // Protected Routes
-router.post("/", authMiddleware, uploadMiddleware.single("image"), createBlog);
+router.post("/", authMiddleware, uploadMiddleware.single("media"), createBlog);
 
-router.put("/:id", authMiddleware, uploadMiddleware.single("image"), updateBlog);
+router.put("/:id", authMiddleware, uploadMiddleware.single("media"), updateBlog);
 
 router.delete("/:id", authMiddleware, deleteBlog);
 

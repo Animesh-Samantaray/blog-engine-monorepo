@@ -2,19 +2,23 @@ import { useState, useEffect } from 'react'
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import Loading from '../components/Loading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
-import loginGif from './Login.gif'
+import loginVDO from './login.mp4'
 import { serverUrl } from '../services/axios.js'
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
-  
+  const [gifKey, setGifKey] = useState(0);
   // State to control the smooth fade-in entrance for the GIF
   const [isLoaded, setIsLoaded] = useState(false)
   
   const { login, user, loading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+
+   useEffect(() => {
+    setGifKey(Date.now()); // New key every mount
+  }, []);
 
   // Triggers the fade-in effect shortly after the component mounts
   useEffect(() => {
@@ -56,12 +60,19 @@ export default function Login() {
       {/* Removed padding, flex centering, and added overflow-hidden */}
       <section className="hidden lg:block relative z-10 w-1/2 bg-[#2bc98a] border-r border-slate-800/50 overflow-hidden">
         
-        {/* The GIF: Pinned to edges, covering full width and height */}
-        <img 
-          src={loginGif} 
-          alt="Login Animation" 
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-        />
+        {/* The VIDEO: Pinned to edges, covering full width and height */}
+      <video
+  key={location.key}      // Restart when the Login page is mounted
+  autoPlay
+  muted
+  playsInline
+  preload="auto"
+  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ease-out ${
+    isLoaded ? "opacity-100" : "opacity-0"
+  }`}
+>
+  <source src={loginVDO} type="video/mp4" />
+</video>
 
       </section>
 

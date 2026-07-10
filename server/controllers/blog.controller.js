@@ -1,6 +1,6 @@
 import Blog from "../models/Blog.model.js";
 import User from "../models/User.model.js";
-import deleteImage from "../utils/deleteImage.js";
+import deleteMedia from "../utils/deleteMedia.js";
 import jwt from "jsonwebtoken";
 
 // ======================================
@@ -9,15 +9,24 @@ import jwt from "jsonwebtoken";
 
 export const createBlog = async (req, res) => {
   try {
-    const { title, content, category } = req.body;
+    const { title, content, category ,  } = req.body;
 
-    const image = req.file ? `/uploads/${req.file.filename}` : "";
+  let image = "";
+  let video = "";
+
+  if (req.file) {
+    if (req.file.mimetype.startsWith("image")) {
+      image = `/uploads/${req.file.filename}`;
+    } else if (req.file.mimetype.startsWith("video")) {
+      video = `/uploads/${req.file.filename}`;
+    }
+  }
 
     const blog = await Blog.create({
       title,
       content,
       category,
-      image,
+      image,video,
       author: req.user.id,
     });
 
@@ -152,11 +161,35 @@ export const updateBlog = async (req, res) => {
       blog.isPublished = isPublished;
 
     if (req.file) {
-      if (blog.image) {
-        deleteImage(blog.image);
-      }
-      blog.image = `/uploads/${req.file.filename}`;
+
+    if (req.file.mimetype.startsWith("image")) {
+
+        if (blog.image) {
+            deleteMedia(blog.image);
+        }
+
+        if (blog.video) {
+            deleteMedia(blog.video);
+            blog.video = "";
+        }
+
+        blog.image = `/uploads/${req.file.filename}`;
     }
+
+    else if (req.file.mimetype.startsWith("video")) {
+
+        if (blog.video) {
+            deleteMedia(blog.video);
+        }
+
+        if (blog.image) {
+            deleteMedia(blog.image);
+            blog.image = "";
+        }
+
+        blog.video = `/uploads/${req.file.filename}`;
+    }
+}
 
     await blog.save();
 
@@ -201,7 +234,10 @@ export const deleteBlog = async (req, res) => {
     }
 
     if (blog.image) {
-      deleteImage(blog.image);
+      deleteMedia(blog.image);
+    }
+    if (blog.video) {
+      deleteMedia(blog.video);
     }
 
     await Blog.findByIdAndDelete(req.params.id);

@@ -17,9 +17,9 @@ const getImageUrl = (image) => {
   if (!image) {
     return ''
   }
-
   return image.startsWith('http') ? image : `${serverUrl}${image}`
 }
+
 
 export default function BlogDetails() {
   const { id } = useParams()
@@ -34,6 +34,10 @@ export default function BlogDetails() {
 
   const imageUrl = useMemo(() => getImageUrl(blog?.image), [blog?.image])
   const authorImage = useMemo(() => getImageUrl(blog?.author?.profileImage), [blog?.author?.profileImage])
+  const videoUrl=useMemo(
+()=>getImageUrl(blog?.video),
+[blog?.video]
+)
 
   useEffect(() => {
     let isActive = true
@@ -163,13 +167,27 @@ export default function BlogDetails() {
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
         <div className="space-y-10 lg:col-span-8">
           <article className="overflow-hidden rounded-xl border" style={{ borderColor: 'var(--color-border)', background: 'var(--color-card)' }}>
-            {imageUrl ? (
-              <img src={imageUrl} alt={blog.title} className="h-72 w-full object-cover sm:h-96" />
-            ) : (
-              <div className="flex h-72 items-center justify-center text-secondary sm:h-96" style={{ background: 'var(--color-bg-secondary)' }}>
-                No image available
-              </div>
-            )}
+            {videoUrl ? (
+    <video
+        src={videoUrl}
+        controls
+        className="w-full max-h-[600px] object-contain bg-black"
+        preload="metadata"
+    />
+) : imageUrl ? (
+    <img
+        src={imageUrl}
+        alt={blog.title}
+        className="w-full max-h-[600px] object-contain"
+    />
+) : (
+    <div
+        className="flex h-96 items-center justify-center"
+        style={{background:'var(--color-bg-secondary)'}}
+    >
+        No media available
+    </div>
+)}
 
             <div className="p-6 sm:p-10">
               <div className="flex flex-wrap items-center gap-3 text-sm">

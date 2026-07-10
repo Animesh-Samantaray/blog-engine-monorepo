@@ -12,10 +12,19 @@ import Profile from './pages/Profile.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import AdminDashboard from './pages/AdminDashboard.jsx'
 import NotFound from './pages/NotFound.jsx'
+import ForgotPassword from './pages/ForgotPassword.jsx'
+import VerifyOTP from './pages/VerifyOTP.jsx'
+import ResetPassword from './pages/ResetPassword.jsx'
 
 function App() {
   const location = useLocation()
-  const hideShell = ['/login', '/register'].includes(location.pathname)
+  const hideShell = [
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/verify-otp',
+    '/reset-password',
+  ].includes(location.pathname)
 
   return (
     <div className="min-h-screen bg-transparent text-primary transition-colors duration-200">
@@ -26,6 +35,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verify-otp" element={<VerifyOTP />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/blog/:id" element={<BlogDetails />} />
           <Route
             path="/create-blog"

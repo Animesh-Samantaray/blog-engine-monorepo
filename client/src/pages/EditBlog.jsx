@@ -13,7 +13,7 @@ export default function EditBlog() {
     title: '',
     category: 'Technology',
     content: '',
-    image: null,
+    media:null,
   })
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function EditBlog() {
           title: data.blog.title || '',
           category: data.blog.category || 'Technology',
           content: data.blog.content || '',
-          image: null,
+          media: null,
         })
       } catch (error) {
         toast.error(error.response?.data?.message || 'Failed to load blog.')
@@ -53,9 +53,9 @@ export default function EditBlog() {
       data.append('category', form.category)
       data.append('content', form.content.trim())
 
-      if (form.image) {
-        data.append('image', form.image)
-      }
+      if(form.media){
+    data.append("media",form.media)
+    }
 
       await api.put(`/blog/${id}`, data)
       toast.success('Blog updated successfully.')
@@ -116,14 +116,14 @@ export default function EditBlog() {
 
           <div>
             <label className="label-field" htmlFor="edit-image">
-              Cover image <span className="text-xs font-normal text-secondary">(optional)</span>
+              Upload Image / Video <span className="text-xs font-normal text-secondary">(optional)</span>
             </label>
             <input
               id="edit-image"
               type="file"
-              accept="image/*"
+              accept="image/*,video/*"
               className="input-field pt-2"
-              onChange={(event) => setForm({ ...form, image: event.target.files?.[0] || null })}
+              onChange={(event) => setForm({ ...form, media: event.target.files?.[0] || null })}
             />
           </div>
 

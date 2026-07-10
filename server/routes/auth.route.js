@@ -6,6 +6,9 @@ import {
   registerUser,
   loginUser,
   logoutUser,
+  forgotPassword,
+  verifyOTP,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 
 const router = express.Router();
@@ -19,14 +22,13 @@ router.post("/login", loginUser);
 // Logout
 router.post("/logout", logoutUser);
 
-// Google OAuth Routes
-// Initiates Google OAuth flow
+
 router.get(
   "/google",
   passport.authenticate("google", { scope: ["profile", "email"] })
 );
 
-// Google OAuth callback
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -50,5 +52,10 @@ router.get(
     }
   }
 );
+
+
+router.post("/forgot-password", forgotPassword);
+router.post("/verify-otp", verifyOTP);
+router.post("/reset-password", resetPassword);
 
 export default router;
