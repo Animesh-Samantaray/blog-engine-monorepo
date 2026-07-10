@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import BlogCard from '../components/BlogCard.jsx'
 import Loading from '../components/Loading.jsx'
@@ -32,28 +33,28 @@ export default function Dashboard() {
     <section className="section-shell space-y-8">
       <div>
         <h1 className="section-title">Dashboard</h1>
-        <p className="section-subtitle">A quick look at your account activity.</p>
+        <p className="section-subtitle">Overview of your account activity and content</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-400">Total Blogs</p>
-          <p className="mt-2 text-3xl font-bold text-slate-50">{data?.totalBlogs || 0}</p>
+          <p className="text-sm font-medium text-secondary">Total Blogs</p>
+          <p className="mt-2 text-3xl font-semibold text-primary">{data?.totalBlogs || 0}</p>
         </div>
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-400">Total Comments</p>
-          <p className="mt-2 text-3xl font-bold text-slate-50">{data?.totalComments || 0}</p>
+          <p className="text-sm font-medium text-secondary">Total Comments</p>
+          <p className="mt-2 text-3xl font-semibold text-primary">{data?.totalComments || 0}</p>
         </div>
         <div className="card-panel p-6">
-          <p className="text-sm text-slate-400">Profile Info</p>
-          <p className="mt-2 text-lg font-semibold text-slate-50">{data?.user?.name || 'Account'}</p>
-          <p className="mt-1 text-sm text-slate-400">{data?.user?.email || 'No email available'}</p>
+          <p className="text-sm font-medium text-secondary">Profile</p>
+          <p className="mt-2 text-lg font-semibold text-primary">{data?.user?.name || 'Account'}</p>
+          <p className="mt-1 text-sm text-secondary">{data?.user?.email || 'No email'}</p>
         </div>
       </div>
 
       <div className="card-panel p-6 sm:p-8">
-        <h2 className="text-2xl font-semibold text-slate-50">Recent Blogs</h2>
-        <p className="mt-2 text-sm text-slate-400">Your latest posts are shown below.</p>
+        <h2 className="text-xl font-semibold text-primary">Recent posts</h2>
+        <p className="mt-2 text-sm text-secondary">Your latest published content</p>
 
         {data?.blogs?.length ? (
           <div className="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -62,8 +63,11 @@ export default function Dashboard() {
             ))}
           </div>
         ) : (
-          <div className="mt-6 rounded-2xl border border-slate-700 bg-slate-950/40 p-5 text-sm text-slate-400">
-            You have not created any blogs yet.
+          <div className="mt-6 rounded-lg border p-8 text-center text-sm text-secondary" style={{ borderColor: 'var(--color-border)', background: 'var(--color-bg-secondary)' }}>
+            <p>You haven't created any posts yet</p>
+            <Link to="/create-blog" className="btn-primary mt-4 inline-block">
+              Create your first post
+            </Link>
           </div>
         )}
       </div>

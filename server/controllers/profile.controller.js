@@ -1,6 +1,7 @@
 import User from "../models/User.model.js";
 import Blog from "../models/Blog.model.js";
 import Comment from "../models/Comment.model.js";
+import deleteImage from "../utils/deleteImage.js";
 
 // ======================================
 // Get My Profile
@@ -45,6 +46,9 @@ export const updateProfile = async (req, res) => {
     if (bio) user.bio = bio;
 
     if (req.file) {
+      if (user.profileImage && user.profileImage.startsWith("/uploads/")) {
+        deleteImage(user.profileImage);
+      }
       user.profileImage = `/uploads/${req.file.filename}`;
     }
 

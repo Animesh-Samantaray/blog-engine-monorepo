@@ -75,8 +75,8 @@ export default function EditBlog() {
     <section className="section-shell">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6">
-          <h1 className="section-title">Edit Blog</h1>
-          <p className="section-subtitle">Update the content and image of your blog post.</p>
+          <h1 className="section-title">Edit post</h1>
+          <p className="section-subtitle">Update your content and settings</p>
         </div>
 
         <form className="panel-soft space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
@@ -87,6 +87,7 @@ export default function EditBlog() {
             <input
               id="edit-title"
               className="input-field"
+              placeholder="Enter your post title"
               value={form.title}
               onChange={(event) => setForm({ ...form, title: event.target.value })}
               required
@@ -115,7 +116,7 @@ export default function EditBlog() {
 
           <div>
             <label className="label-field" htmlFor="edit-image">
-              Image Upload
+              Cover image <span className="text-xs font-normal text-secondary">(optional)</span>
             </label>
             <input
               id="edit-image"
@@ -132,8 +133,9 @@ export default function EditBlog() {
             </label>
             <textarea
               id="edit-content"
-              rows="10"
+              rows="12"
               className="input-field resize-none"
+              placeholder="Write your content here..."
               value={form.content}
               onChange={(event) => setForm({ ...form, content: event.target.value })}
               required
@@ -141,7 +143,7 @@ export default function EditBlog() {
           </div>
 
           <button type="submit" className="btn-primary" disabled={submitting}>
-            {submitting ? 'Updating...' : 'Update Blog'}
+            {submitting ? 'Updating...' : 'Update post'}
           </button>
         </form>
       </div>

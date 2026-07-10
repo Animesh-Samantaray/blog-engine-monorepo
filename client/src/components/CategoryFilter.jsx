@@ -8,10 +8,10 @@ export default function CategoryFilter({ value, onChange }) {
           key={category}
           type="button"
           onClick={() => onChange(category)}
-          className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+          className={`rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 ${
             value === category
-              ? 'bg-blue-600 text-white shadow-lg shadow-blue-950/20'
-              : 'border border-slate-700 bg-slate-900/70 text-slate-300 hover:border-slate-500 hover:bg-slate-800'
+              ? 'bg-[color:var(--color-blue)] text-white'
+              : 'border border-[var(--color-border)] bg-[color:var(--color-card)] text-secondary hover:border-[color:var(--color-blue)] hover:text-primary'
           }`}
         >
           {category}

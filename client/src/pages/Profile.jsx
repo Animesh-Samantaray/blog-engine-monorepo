@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import BlogCard from '../components/BlogCard.jsx'
 import Loading from '../components/Loading.jsx'
@@ -85,10 +86,10 @@ export default function Profile() {
             <img
               src={imageUrl}
               alt={user?.name || 'Profile'}
-              className="h-28 w-28 rounded-2xl object-cover ring-1 ring-slate-700"
+              className="h-24 w-24 rounded-xl object-cover"
             />
           ) : (
-            <div className="flex h-28 w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-2xl font-bold text-white shadow-lg shadow-blue-950/20">
+            <div className="flex h-24 w-24 items-center justify-center rounded-xl text-2xl font-bold text-white" style={{ background: 'linear-gradient(135deg, var(--color-blue), var(--color-purple))' }}>
               {(user?.name || 'U').slice(0, 1).toUpperCase()}
             </div>
           )}
@@ -97,10 +98,10 @@ export default function Profile() {
             {!editing ? (
               <>
                 <h1 className="section-title">{user?.name}</h1>
-                <p className="mt-2 text-sm text-slate-400">{user?.email}</p>
-                <p className="mt-4 max-w-3xl text-sm leading-6 text-slate-400">{user?.bio || 'No bio added yet.'}</p>
+                <p className="mt-2 text-sm text-secondary">{user?.email}</p>
+                <p className="mt-4 max-w-3xl text-sm leading-relaxed text-secondary">{user?.bio || 'No bio added yet.'}</p>
                 <button type="button" className="btn-secondary mt-5" onClick={() => setEditing(true)}>
-                  Edit Profile
+                  Edit profile
                 </button>
               </>
             ) : (
@@ -124,7 +125,7 @@ export default function Profile() {
                   </label>
                   <textarea
                     id="profile-bio"
-                    rows="4"
+                    rows="3"
                     className="input-field resize-none"
                     value={form.bio}
                     onChange={(event) => setForm({ ...form, bio: event.target.value })}
@@ -133,7 +134,7 @@ export default function Profile() {
 
                 <div>
                   <label className="label-field" htmlFor="profile-image">
-                    Profile Image
+                    Profile image
                   </label>
                   <input
                     id="profile-image"
@@ -148,7 +149,7 @@ export default function Profile() {
 
                 <div className="flex flex-wrap gap-3">
                   <button type="submit" className="btn-primary" disabled={submitting}>
-                    {submitting ? 'Saving...' : 'Save Changes'}
+                    {submitting ? 'Saving...' : 'Save changes'}
                   </button>
                   <button type="button" className="btn-secondary" onClick={() => setEditing(false)}>
                     Cancel
@@ -162,8 +163,8 @@ export default function Profile() {
 
       <div>
         <div className="mb-6">
-          <h2 className="section-title">My Blogs</h2>
-          <p className="section-subtitle">Posts you have created so far.</p>
+          <h2 className="section-title">My posts</h2>
+          <p className="section-subtitle">Content you have created</p>
         </div>
 
         {blogs.length ? (
@@ -173,8 +174,11 @@ export default function Profile() {
             ))}
           </div>
         ) : (
-          <div className="card-panel p-8 text-center text-slate-400">
-            You have not created any blogs yet.
+          <div className="card-panel p-12 text-center text-secondary">
+            <p>You haven't created any posts yet</p>
+            <Link to="/create-blog" className="btn-primary mt-4 inline-block">
+              Create your first post
+            </Link>
           </div>
         )}
       </div>

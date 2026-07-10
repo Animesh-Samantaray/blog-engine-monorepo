@@ -1,10 +1,10 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800/80 bg-slate-950/80">
-      <div className="section-shell py-6">
-        <div className="flex flex-col items-center justify-between gap-2 text-center text-sm text-slate-400 sm:flex-row sm:text-left">
-          <p>Blog Management System</p>
-          <p>Made  by Animesh Samantaray</p>
+    <footer className="border-t surface-divider bg-[color:var(--color-bg-secondary)] transition-colors duration-200">
+      <div className="section-shell py-8">
+        <div className="flex flex-col items-center justify-between gap-4 text-center text-sm text-secondary sm:flex-row sm:text-left">
+          <p className="font-medium text-primary">Blog Management System</p>
+          <p>Made by Animesh Samantaray</p>
         </div>
       </div>
     </footer>

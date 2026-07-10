@@ -47,8 +47,8 @@ export default function CreateBlog() {
     <section className="section-shell">
       <div className="mx-auto max-w-3xl">
         <div className="mb-6">
-          <h1 className="section-title">Create Blog</h1>
-          <p className="section-subtitle">Write a new blog post and share it with others.</p>
+          <h1 className="section-title">Create new post</h1>
+          <p className="section-subtitle">Write and publish your content</p>
         </div>
 
         <form className="panel-soft space-y-5 p-6 sm:p-8" onSubmit={handleSubmit}>
@@ -59,6 +59,7 @@ export default function CreateBlog() {
             <input
               id="title"
               className="input-field"
+              placeholder="Enter your post title"
               value={form.title}
               onChange={(event) => setForm({ ...form, title: event.target.value })}
               required
@@ -87,7 +88,7 @@ export default function CreateBlog() {
 
           <div>
             <label className="label-field" htmlFor="image">
-              Image Upload
+              Cover image <span className="text-xs font-normal text-secondary">(optional)</span>
             </label>
             <input
               id="image"
@@ -104,8 +105,9 @@ export default function CreateBlog() {
             </label>
             <textarea
               id="content"
-              rows="10"
+              rows="12"
               className="input-field resize-none"
+              placeholder="Write your content here..."
               value={form.content}
               onChange={(event) => setForm({ ...form, content: event.target.value })}
               required
@@ -113,7 +115,7 @@ export default function CreateBlog() {
           </div>
 
           <button type="submit" className="btn-primary" disabled={submitting}>
-            {submitting ? 'Submitting...' : 'Submit'}
+            {submitting ? 'Publishing...' : 'Publish post'}
           </button>
         </form>
       </div>

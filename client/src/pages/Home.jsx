@@ -55,40 +55,54 @@ export default function Home() {
   return (
     <div>
       <section className="page-hero">
-        <div className="section-shell grid gap-10 py-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:py-16">
+        <div className="section-shell grid gap-12 py-16 lg:grid-cols-[1fr_0.9fr] lg:items-center lg:py-20">
           <div>
-            <span className="badge">Blog Platform</span>
-            <h1 className="mt-5 max-w-2xl text-4xl font-bold tracking-tight text-slate-50 sm:text-5xl">
-              A blogging workspace for writing, reading, and managing content.
+            <span className="badge">Blog Management Platform</span>
+            <h1 className="mt-4 max-w-2xl text-4xl font-semibold tracking-tight text-primary sm:text-5xl lg:text-6xl">
+              Publish your stories, build your audience
             </h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
-              Browse articles, search by title, filter by category, write posts, and manage your
-              account from one polished dashboard.
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-secondary sm:text-lg">
+              A modern workspace for writers and creators. Organize content, engage readers, and grow your blog with powerful tools.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
               {user ? (
                 <Link to="/create-blog" className="btn-primary">
-                  Create Blog
+                  Create new post
                 </Link>
               ) : (
                 <Link to="/register" className="btn-primary">
-                  Get Started
+                  Get started free
                 </Link>
               )}
               <Link to="/dashboard" className="btn-secondary">
-                View Dashboard
+                Explore content
               </Link>
+            </div>
+
+            <div className="mt-10 grid max-w-xl grid-cols-3 gap-4">
+              <div className="card-panel p-4">
+                <p className="text-xs font-medium text-secondary">Create</p>
+                <p className="mt-1 text-lg font-semibold text-primary">Fast</p>
+              </div>
+              <div className="card-panel p-4">
+                <p className="text-xs font-medium text-secondary">Organize</p>
+                <p className="mt-1 text-lg font-semibold text-primary">Simple</p>
+              </div>
+              <div className="card-panel p-4">
+                <p className="text-xs font-medium text-secondary">Publish</p>
+                <p className="mt-1 text-lg font-semibold text-primary">Easy</p>
+              </div>
             </div>
           </div>
 
           <div className="panel-soft p-6">
-            <h2 className="text-lg font-semibold text-slate-50">Search and filter</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-400">
-              Search blogs or  categories.
+            <h2 className="text-lg font-semibold text-primary">Discover content</h2>
+            <p className="mt-2 text-sm leading-relaxed text-secondary">
+              Search and filter through articles to find exactly what you're looking for.
             </p>
 
-            <div className="mt-5 space-y-5">
+            <div className="mt-6 space-y-5">
               <SearchBar
                 value={search}
                 onChange={setSearch}
@@ -102,18 +116,18 @@ export default function Home() {
       </section>
 
       <section className="section-shell">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="section-title">Latest Blogs</h2>
+            <h2 className="section-title">Latest posts</h2>
             <p className="section-subtitle">
-              Browse the newest posts from the blogging community.
+              Browse the newest content from our community
             </p>
           </div>
-          <p className="text-sm text-slate-400">{blogs.length} posts found</p>
+          <p className="text-sm font-medium text-secondary">{blogs.length} {blogs.length === 1 ? 'post' : 'posts'}</p>
         </div>
 
         {loading ? (
-          <Loading message="Loading blogs..." />
+          <Loading message="Loading posts..." />
         ) : blogs.length ? (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {blogs.map((blog) => (
@@ -121,8 +135,15 @@ export default function Home() {
             ))}
           </div>
         ) : (
-          <div className="card-panel p-8 text-center text-slate-400">
-            No blogs found for the current filters.
+          <div className="card-panel p-12 text-center">
+            <p className="text-sm text-secondary">No posts found for the current filters</p>
+            <button
+              type="button"
+              className="btn-secondary mt-4"
+              onClick={handleClear}
+            >
+              Clear filters
+            </button>
           </div>
         )}
       </section>

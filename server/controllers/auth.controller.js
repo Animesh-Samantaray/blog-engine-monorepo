@@ -118,6 +118,13 @@ export const loginUser = async (req, res) => {
       });
     }
 
+    if (!user.password) {
+      return res.status(401).json({
+        success: false,
+        message: "This account is registered using Google OAuth. Please login with Google.",
+      });
+    }
+
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {

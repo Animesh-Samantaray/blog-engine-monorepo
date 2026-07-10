@@ -1,4 +1,7 @@
 import Blog from "../models/Blog.model.js";
+import User from "../models/User.model.js";
+import deleteImage from "../utils/deleteImage.js";
+import jwt from "jsonwebtoken";
 
 // ======================================
 // Create Blog
@@ -38,7 +41,7 @@ export const createBlog = async (req, res) => {
 
 export const getAllBlogs = async (req, res) => {
   try {
-    const blogs = await Blog.find()
+    const blogs = await Blog.find({ isPublished: true })
       .populate("author", "name profileImage")
       .sort({ createdAt: -1 });
 
@@ -73,6 +76,32 @@ export const getBlogById = async (req, res) => {
         success: false,
         message: "Blog not found.",
       });
+    }
+
+    if (!blog.isPublished) {
+      let isAuthorized = false;
+      const token = req.cookies?.token;
+      if (token) {
+        try {
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+          const currentUser = await User.findById(decoded.id);
+          if (
+            currentUser &&
+            (currentUser._id.toString() === blog.author._id.toString() ||
+              currentUser.role === "admin")
+          ) {
+            isAuthorized = true;
+          }
+        } catch (err) {
+          // Token is invalid/expired
+        }
+      }
+      if (!isAuthorized) {
+        return res.status(403).json({
+          success: false,
+          message: "This blog post is not published.",
+        });
+      }
     }
 
     res.status(200).json({
@@ -123,6 +152,9 @@ export const updateBlog = async (req, res) => {
       blog.isPublished = isPublished;
 
     if (req.file) {
+      if (blog.image) {
+        deleteImage(blog.image);
+      }
       blog.image = `/uploads/${req.file.filename}`;
     }
 
@@ -168,6 +200,10 @@ export const deleteBlog = async (req, res) => {
       });
     }
 
+    if (blog.image) {
+      deleteImage(blog.image);
+    }
+
     await Blog.findByIdAndDelete(req.params.id);
 
     res.status(200).json({
@@ -192,6 +228,7 @@ export const searchBlogs = async (req, res) => {
   try {
     const { search } = req.query;
     const blogs = await Blog.find({
+      isPublished: true,
       $or: [
         {
           title: {
@@ -230,6 +267,7 @@ export const getBlogsByCategory = async (req, res) => {
   try {
     const blogs = await Blog.find({
       category: req.params.category,
+      isPublished: true,
     }).populate("author", "name profileImage");
 
     res.status(200).json({

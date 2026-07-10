@@ -22,7 +22,7 @@ export default function BlogCard({ blog }) {
   const authorImage = getImageUrl(blog.author?.profileImage)
 
   return (
-    <article className="card-panel flex h-full flex-col overflow-hidden transition duration-200 hover:-translate-y-1 hover:border-slate-600 hover:shadow-2xl hover:shadow-blue-950/20">
+    <article className="card-panel flex h-full flex-col overflow-hidden transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg">
       {imageUrl ? (
         <img
           src={imageUrl}
@@ -30,44 +30,43 @@ export default function BlogCard({ blog }) {
           className="h-48 w-full object-cover"
         />
       ) : (
-        <div className="flex h-48 items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 text-sm font-medium text-slate-400">
+        <div className="flex h-48 items-center justify-center text-sm font-medium text-secondary" style={{ background: 'var(--color-bg-secondary)' }}>
           No image available
         </div>
       )}
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="mb-3 flex items-center justify-between gap-3 text-xs text-slate-400">
+        <div className="mb-3 flex items-center justify-between gap-3 text-xs text-secondary">
           <span className="badge">{blog.category}</span>
-          <span>{formatDate(blog.createdAt)}</span>
+          <span className="text-xs">{formatDate(blog.createdAt)}</span>
         </div>
 
-        <h3 className="text-lg font-semibold tracking-tight text-slate-50">{blog.title}</h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-400">{summary}</p>
+        <h3 className="text-lg font-semibold tracking-tight text-primary line-clamp-2">{blog.title}</h3>
+        <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-secondary">{summary}</p>
 
-        <div className="mt-5 flex items-center justify-between gap-3">
+        <div className="mt-auto pt-5 flex items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
             {authorImage ? (
               <img
                 src={authorImage}
                 alt={blog.author?.name || 'Author'}
-                className="h-11 w-11 rounded-full object-cover ring-2 ring-blue-500/20"
+                className="h-9 w-9 rounded-full object-cover"
               />
             ) : (
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-violet-600 text-sm font-bold text-white shadow-lg shadow-blue-950/20">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-semibold text-white" style={{ background: 'linear-gradient(135deg, var(--color-blue), var(--color-purple))' }}>
                 {(blog.author?.name?.split(" ")[0] || 'A').slice(0, 1).toUpperCase()}
               </div>
             )}
 
             <div className="min-w-0">
-              <p className="truncate font-medium text-slate-100">
+              <p className="truncate text-sm font-medium text-primary">
                 {blog.author?.name || 'Unknown author'}
               </p>
-              <p className="text-xs text-slate-400">Author</p>
             </div>
           </div>
 
-          <Link to={`/blog/${blog._id}`} className="btn-primary px-4 py-2">
-            Read More
+          <Link to={`/blog/${blog._id}`} className="btn-primary px-4 py-2 text-xs">
+            Read
           </Link>
         </div>
       </div>
