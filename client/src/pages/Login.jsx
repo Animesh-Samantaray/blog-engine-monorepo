@@ -4,7 +4,10 @@ import Loading from '../components/Loading.jsx'
 import { useAuth } from '../context/AuthContext.jsx'
 import loginVDO from './login.mp4'
 import { serverUrl } from '../services/axios.js'
-
+import {
+  requestNotificationPermission,
+  showNotification,
+} from "../utils/notification";
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [submitting, setSubmitting] = useState(false)
@@ -42,9 +45,20 @@ export default function Login() {
     setSubmitting(true)
 
     try {
-      await login(form)
-      const destination = location.state?.from?.pathname || '/'
-      navigate(destination, { replace: true })
+     await login(form);
+
+// Ask permission only once
+const granted = await requestNotificationPermission();
+
+if (granted) {
+  showNotification(
+    "Login Successful 🎉",
+    "Welcome back!"
+  );
+}
+
+const destination = location.state?.from?.pathname || "/";
+navigate(destination, { replace: true });
     } catch (error) {
       console.error("Login failed:", error)
     } finally {

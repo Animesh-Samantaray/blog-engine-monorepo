@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import api from '../services/axios.js'
-
+import { useAuth } from '../context/AuthContext.jsx'
+import { showNotification,requestNotificationPermission } from '../utils/notification.js'
 export default function CreateBlog() {
+
+
   const navigate = useNavigate()
   const [form, setForm] = useState({
   title: '',
@@ -12,7 +15,7 @@ export default function CreateBlog() {
   media: null,
 })
   const [submitting, setSubmitting] = useState(false)
-
+  const {user}=useAuth();
   const handleSubmit = async (event) => {
     event.preventDefault()
 
@@ -34,7 +37,13 @@ export default function CreateBlog() {
 }
 
       await api.post('/blog', data)
+      const granted = await requestNotificationPermission();
       toast.success('Blog created successfully.')
+      if (granted) {
+  showNotification(
+   "New Blog Created",`Good Job ${user?.name}`
+  );
+}
       navigate('/')
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to create blog.')

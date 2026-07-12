@@ -39,6 +39,7 @@ const fileFilter = (req, file, cb) => {
     "video/x-msvideo", // .avi
     "video/x-matroska", // .mkv
     "video/webm",
+    
   ];
 
   const extension = path.extname(file.originalname).toLowerCase();
@@ -51,7 +52,7 @@ const fileFilter = (req, file, cb) => {
   } else {
     cb(
       new Error(
-        "Only JPG, JPEG, PNG, WEBP, MP4, MOV, AVI, MKV and WEBM files are allowed."
+        "Only JPG, JPEG, PNG, WEBP, MP4, MOV, AVI, MKV  and WEBM files are allowed."
       )
     );
   }
