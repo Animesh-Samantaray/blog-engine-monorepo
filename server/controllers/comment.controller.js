@@ -108,6 +108,7 @@ export const updateComment = async (req, res) => {
     existingComment.comment = comment;
 
     await existingComment.save();
+     await existingComment.populate("user", "name profileImage");
 
     res.status(200).json({
       success: true,
